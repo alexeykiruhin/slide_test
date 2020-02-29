@@ -1,5 +1,16 @@
-document.getElementById('txt2').style.top = '950px';
 document.body.style.overflow = 'hidden';
+
+switch (window.pageYOffset) { /* контролируем обновление на каждом слайде */
+  case 768:
+    document.getElementById('txt2').style.top = '752px';
+    break;
+  case 1536:
+    document.getElementById('txt2').style.top = '553px';
+    break;
+  default:
+    document.getElementById('txt2').style.top = '950px';
+
+}
 
 let swipe = () => {
   var startPoint={};
@@ -45,21 +56,27 @@ let swipe = () => {
       animateText('down');
       if (window.pageYOffset > 750) {
         console.log('3swipe');
+      } else {
+
       }
     }
   } else {/*СВАЙП ВНИЗ*/
     console.log(startPoint);
     if (startPoint.y > 768) { /*проверка верхней границы */
-      console.log('scroll top');
+      console.log('scroll up');
       let options = {
         top: -768,
         behavior: 'smooth'
       }
       window.scrollBy(options);
-      animateText('up');
+
       console.log(window.pageYOffset);
       if (window.pageYOffset > 1500) {
         console.log('1swipe');
+        document.getElementById('txt2').style.top = '554px'
+        animateText('up');
+      }else {
+        animateText('up');
       }
     }
   }
