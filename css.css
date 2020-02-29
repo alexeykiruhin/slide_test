@@ -1,0 +1,148 @@
+let bg1 = document.getElementsByClassName('bg1');
+
+
+// css свойства
+document.body.style.overflow = 'hidden';
+document.getElementById('txt2').style.top = '950px';
+
+var startPoint={};
+var nowPoint;
+var ldelay;
+document.addEventListener('touchstart', function(event) {
+event.stopPropagation();
+startPoint.x=event.changedTouches[0].pageX;
+startPoint.y=event.changedTouches[0].pageY;
+ldelay=new Date();
+}, false);
+/*Ловим движение пальцем*/
+document.addEventListener('touchmove', function(event) {
+event.stopPropagation();
+var otk={};
+nowPoint=event.changedTouches[0];
+otk.x=nowPoint.pageX-startPoint.x;
+otk.y=nowPoint.pageY-startPoint.y;
+/*Обработайте данные*/
+/*Для примера*/
+if(Math.abs(otk.y)>200){
+if(otk.y<0){
+
+/*СВАЙП ВЛЕВО(ПРЕД.СТРАНИЦА)*/}
+if(otk.y>0){
+  /*СВАЙП ВПРАВО(СЛЕД.СТРАНИЦА)*/}
+startPoint={x:nowPoint.pageX,y:nowPoint.pageY};
+}
+}, false);
+
+/*Ловим отпускание пальца*/
+document.addEventListener('touchend', function(event) {
+var pdelay=new Date();
+nowPoint=event.changedTouches[0];
+var xAbs = Math.abs(startPoint.x - nowPoint.pageX);
+var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
+if ((xAbs > 20 || yAbs > 20) && (pdelay.getTime()-ldelay.getTime())<200) {
+if (xAbs > yAbs) {
+if (nowPoint.pageX < startPoint.x){/*СВАЙП ВЛЕВО*/}
+else{/*СВАЙП ВПРАВО*/}
+}
+else {
+if (nowPoint.pageY < startPoint.y){
+  console.log('scroll down');
+  // document.getElementsByClassName('bg2').scrollIntoView({
+  //   behavior: 'smooth',
+  //   block: 'start'
+  // });
+  let options = {
+    top: 768,
+    behavior: 'smooth'
+  }
+  window.scrollBy(options);
+
+
+  //Анимация текста и камней
+let top = document.getElementById('txt2').style.top;
+top = parseFloat(top);
+
+let start = Date.now(); // запомнить время начала
+let timer = setInterval(function() {
+  // сколько времени прошло с начала анимации?
+  let timePassed = Date.now() - start;
+
+  if (timePassed >= 1000) {
+    clearInterval(timer); // закончить анимацию через 1 секунды
+    return;
+  }
+
+  // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+  draw(timePassed);
+
+}, 10);
+
+// в то время как timePassed идёт от 0 до 2000
+// left изменяет значение от 0px до 400px
+function draw(timePassed) {
+  // console.log(document.getElementById('txt2').style.top.replace(/[^-0-9]/gim,''));
+  // console.log(Math.round(950 - (timePassed / 5)*2));
+
+  console.log('top ' + top);
+  document.getElementById('txt2').style.top = (
+    // top - timePassed/100
+    top - (timePassed / 10)*2
+  ) + 'px';
+  // document.getElementsByClassName('txt2').style.top = (868 - timePassed / 10) + 'px';
+}
+
+
+// конец анимации текста и камней
+
+/*СВАЙП ВВЕРХ*/}
+
+else{
+  console.log('scroll top');
+  let options = {
+    top: -768,
+    behavior: 'smooth'
+  }
+  window.scrollBy(options);
+  // window.scrollBy(0, -768);
+
+  //Анимация текста и камней
+  let top = document.getElementById('txt2').style.top;
+  top = parseFloat(top);
+let start = Date.now(); // запомнить время начала
+let timer = setInterval(function() {
+  // сколько времени прошло с начала анимации?
+  let timePassed = Date.now() - start;
+
+  if (timePassed >= 1000) {
+    clearInterval(timer); // закончить анимацию через 1 секунды
+    return;
+  }
+
+  // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+  draw(timePassed);
+
+}, 10);
+
+// в то время как timePassed идёт от 0 до 2000
+// left изменяет значение от 0px до 400px
+function draw(timePassed) {
+  // console.log(document.getElementById('txt2').style.top.replace(/[^-0-9]/gim,''));
+  // console.log(Math.round(950 - (timePassed / 5)*2));
+
+  console.log('top ' + top);
+  document.getElementById('txt2').style.top = (
+    // top + timePassed/100
+    top + (timePassed / 10)*2
+  ) + 'px';
+  // document.getElementsByClassName('txt2').style.top = (868 - timePassed / 10) + 'px';
+}
+
+
+// конец анимации текста и камней
+
+
+
+/*СВАЙП ВНИЗ*/}
+}
+}
+}, false);
