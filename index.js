@@ -1,35 +1,51 @@
+// убираем контроль над скроллом страницы
 document.body.style.overflow = 'hidden';
+// инициализация пагинации
 let pagination = document.getElementsByClassName('p');
 let white = 'white';
 let orange = '#f78b1f';
 
-pagination[0].style.backgroundColor = orange;
-pagination[1].style.backgroundColor = white;
-pagination[2].style.backgroundColor = white;
+const paginationUpdate = (slide) => {
+  switch (slide) {
+    case 1:
+      pagination[0].style.backgroundColor = orange;
+      pagination[1].style.backgroundColor = white;
+      pagination[2].style.backgroundColor = white;
+      break;
+    case 2:
+      pagination[0].style.backgroundColor = white;
+      pagination[1].style.backgroundColor = orange;
+      pagination[2].style.backgroundColor = white;
+      break;
+    case 3:
+      pagination[0].style.backgroundColor = white;
+      pagination[1].style.backgroundColor = white;
+      pagination[2].style.backgroundColor = orange;
+      break;
+    default:
 
-switch (window.pageYOffset) { /* контролируем обновление на каждом слайде */
+  }
+}
+
+// выделяем 1 слайд на пагинации
+paginationUpdate(1);
+
+// контролируем обновление страницы на каждом слайде
+switch (window.pageYOffset) {
   case 768: // 2 slide
     document.getElementById('txt2').style.top = '752px';
-    console.log('2slide');
-    pagination[0].style.backgroundColor = white;
-    pagination[1].style.backgroundColor = orange;
-    pagination[2].style.backgroundColor = white;
+    paginationUpdate(2);
     break;
   case 1536: // 3 slide
     document.getElementById('txt2').style.top = '553px';
-    console.log('3slide');
-    pagination[0].style.backgroundColor = white;
-    pagination[1].style.backgroundColor = white;
-    pagination[2].style.backgroundColor = orange;
+    paginationUpdate(3);
     break;
   default: // 1 slide
-    console.log('1slide');
     document.getElementById('txt2').style.top = '950px';
-    pagination[0].style.backgroundColor = orange;
-    pagination[1].style.backgroundColor = white;
-    pagination[2].style.backgroundColor = white;
+    paginationUpdate(1);
 }
 
+// обработка свайпа по экрану айпада
 let swipe = () => {
   let startPoint={};
   let nowPoint;
@@ -58,10 +74,6 @@ let swipe = () => {
   let xAbs = Math.abs(startPoint.x - nowPoint.pageX);
   let yAbs = Math.abs(startPoint.y - nowPoint.pageY);
   if ((xAbs > 20 || yAbs > 20) && (pdelay.getTime()-ldelay.getTime())<200) {
-  if (xAbs > yAbs) {
-  // if (nowPoint.pageX < startPoint.x){/*СВАЙП ВЛЕВО*/}
-  // else{/*СВАЙП ВПРАВО*/}
-  } else {
   if (nowPoint.pageY < startPoint.y){/*СВАЙП ВВЕРХ*/
     if (startPoint.y < 1500) { /*проверка нижней границы*/
       let options = {
@@ -71,14 +83,10 @@ let swipe = () => {
       window.scrollBy(options);
       switch (window.pageYOffset) { /* переключение пагинации */
         case 0: // 2 slide
-          pagination[0].style.backgroundColor = white;
-          pagination[1].style.backgroundColor = orange;
-          pagination[2].style.backgroundColor = white;
+          paginationUpdate(2);
           break;
         case 768: // 3 slide
-          pagination[0].style.backgroundColor = white;
-          pagination[1].style.backgroundColor = white;
-          pagination[2].style.backgroundColor = orange;
+          paginationUpdate(3);
           break;
         default: // 1 slide
 
@@ -94,21 +102,16 @@ let swipe = () => {
       window.scrollBy(options);
       switch (window.pageYOffset) { /* переключение пагинации */
         case 1536: // 2 slide
-          pagination[0].style.backgroundColor = white;
-          pagination[1].style.backgroundColor = orange;
-          pagination[2].style.backgroundColor = white;
+          paginationUpdate(2);
           break;
         case 768: // 1 slide
-          pagination[0].style.backgroundColor = orange;
-          pagination[1].style.backgroundColor = white;
-          pagination[2].style.backgroundColor = white;
+          paginationUpdate(1);
           break;
         default:
 
       }
 
       if (window.pageYOffset > 1500) {
-        console.log('1swipe');
         document.getElementById('txt2').style.top = '554px'
         animateText('up');
       }else {
@@ -117,10 +120,10 @@ let swipe = () => {
     }
   }
   }
-  }
   }, false);
 }
 
+// Обработка текста и камней на втором слайде
 let animateText = (side) => {
   //Анимация текста и камней
   let top = document.getElementById('txt2').style.top;
