@@ -1,7 +1,16 @@
 const obj = document.getElementById('rock');
-const tab1 = document.getElementById('tab1');
-const tab2 = document.getElementById('tab2');
-let togg = 1;
+const wrap = document.getElementById('wrap');
+const toggleBarColor = document.getElementById('toggleBarColor');
+let position = 2;
+const max_position = document.getElementById('wrap').children.length;
+let togg668 = 0;
+let togg318 = 0;
+let toggle1 = 1;
+
+
+console.log('pos1 ' + position);
+
+
 
 /*Ловим касание*/
 obj.addEventListener('touchstart', function(event) {
@@ -12,79 +21,35 @@ touchOffsetX = touch.pageX - touch.target.offsetLeft;
 }, false);
 /*Передвигаем объект*/
 obj.addEventListener('touchmove', function(event) {
-if (event.targetTouches.length == 1) {
+if (event.targetTouches.length == 1) {//1 finger
 let touch = event.targetTouches[0];
 if (touch.pageX < 805 && touch.pageX > 180) {
   obj.style.left = touch.pageX + 'px';
-  tab1.style.left = -(805 - touch.pageX)*3.3 + 'px' ;
+  // console.log(touch.pageX.toString());
+  toggleBarColor.style.width = touch.pageX.toString().substring(0, 2) + '%';
+  if (touch.pageX < 668 && togg668 == 0) {
+      console.log('668: ' + position);
+      --position;
+      wrap.style['transform'] = `translateX(-${position}00%)`;
+      togg668 = 1;
 
-  //console.log('left: ' + -(805 - touch.pageX)*3.3);
-//   if (parseInt(obj.style.left) == 668 && togg == 1) {
-//     togg = 0
-//     console.log(0);
-//     //Анимация scroll
-//     // let top = document.getElementById('txt2').style.top;
-//     // top = parseFloat(top);
-//     let start = Date.now(); // запомнить время начала
-//     let timer = setInterval(function() {
-//       // сколько времени прошло с начала анимации?
-//       let timePassed = Date.now() - start;
-//
-//       if (timePassed >= 1000) {
-//         clearInterval(timer); // закончить анимацию через 1 секунды
-//         return;
-//       }
-//
-//     // отрисовать анимацию на момент timePassed, прошедший с начала анимации
-//     draw(timePassed);
-//
-//     }, 1);
-//
-//     // в то время как timePassed идёт от 0 до 1000
-//     // top изменяет значение от 950px до 750px
-//     function draw(timePassed) {
-//       console.log(timePassed);
-//       tab1.style.right = -timePassed + 24 + 'px';
-//     }
-//
-//
-//   // конец анимации
-// } else if(parseInt(obj.style.left) == 668 && togg == 0) {
-//     togg = 1
-//     console.log(1);
-//     //Анимация scroll
-//     // let top = document.getElementById('txt2').style.top;
-//     // top = parseFloat(top);
-//     let start = Date.now(); // запомнить время начала
-//     let timer = setInterval(function() {
-//       // сколько времени прошло с начала анимации?
-//       let timePassed = Date.now() - start;
-//
-//       if (timePassed >= 1000) {
-//         clearInterval(timer); // закончить анимацию через 1 секунды
-//         return;
-//       }
-//
-//     // отрисовать анимацию на момент timePassed, прошедший с начала анимации
-//     draw(timePassed);
-//
-//     }, 1);
-//
-//     // в то время как timePassed идёт от 0 до 1000
-//     // top изменяет значение от 950px до 750px
-//     function draw(timePassed) {
-//       console.log('timePassed = ' + (-timePassed));
-//       tab1.style.left = -timePassed + 24 + 'px';
-//       tab1.style.width = timePassed + 24 + 'px';
-//       tab2.style.left = tab2.style.left + timePassed +1  + 'px';
-//       console.log('tab2.style.left ' + tab2.style.left);
-//     }
-//
-//
-//   // конец анимации
-//   }
+  } else if (touch.pageX > 668 && togg668 == 1) {
+      console.log('668.2');
+      ++position;
+      wrap.style['transform'] = `translateX(-${position}00%)`;
+      togg668 = 0;
+  }
 
-  //tab1.style.left = -(805 - touch.pageX)*3.3 + 'px' ;
+  if (touch.pageX < 318 && togg318 == 0) {
+    console.log('318: ' + position);
+    --position;
+    wrap.style['transform'] = `translateX(-${position}00%)`;
+    togg318 = 1;
+  } else if (touch.pageX > 318 && togg318 == 1) {
+    ++position;
+    wrap.style['transform'] = `translateX(-${position}00%)`;
+    togg318 = 0;
+  }
 }
 }
 }, false);

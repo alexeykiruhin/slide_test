@@ -6,36 +6,59 @@
     <title>slide</title>
   </head>
   <body>
+    <div class="pagination">
+        <div class="p p1"></div>
+        <div class="p p2"></div>
+        <div class="p p3"></div>
+      </div>
     <div class="wrapper">
-      <div id="bg1"></div>
+      <div id="bg1">
+        <div class="circle c1">
+          <div class="border">
+
+          </div>
+        </div>
+        <div class="circle c2">
+          <div class="border">
+
+          </div>
+        </div>
+        <div class="circle c3">
+          <div class="border">
+
+          </div>
+        </div>
+        <div class="circle c4">
+          <div class="border">
+
+          </div>
+        </div>
+      </div>
       <div id="bg2">
         <div id="txt2" class="txt2"></div>
       </div>
-      <div class="bg3">
-        <div id="wrapper3">
-          <img src="./img/bg3.png" id="tab1"/>
-          <img src="./img/bg3_tab2.png" id="tab2"/>
-          <div id="toggle3" class="toggle"></div>
-          <img src="./img/rock.png" id="rock" class="toggle"/>
-          <!-- <div id="tab1"></div>
-          <div id="tab2"></div> -->
-        </div>
+      <div id="bg3">
+        <div class="b-carousel js-carousel">
+          <div id="toggleBarColor" ></div>
+          <div id="toggleBar" ></div>
+          <img src="./img/rock.png" id="rock"/>
+      		<!-- <button class="b-carousel__prev js-carousel__prev">Prev</button>
+      		<button class="b-carousel__next js-carousel__next">Next</button> -->
+      		<div class="b-carousel__wrap js-carousel__wrap" id="wrap" >
+      			<div class="b-carousel__item">
+      				<img src="./img/bg3_tab3.png" alt="1" class="b-carousel__img">
+      			</div>
+      			<div class="b-carousel__item">
+      				<img src="./img/bg3_tab2.png" alt="" class="b-carousel__img">
+      			</div>
+      			<div class="b-carousel__item">
+      				<img src="./img/bg3.png" alt="" class="b-carousel__img">
+      			</div>
+          </div>
+      		</div>
+      	</div>
       </div>
     </div>
-    <!-- <div class="bg1"></div>
-    <div class="bg2">
-      <div id="txt2" class="txt2"></div>
-    </div>
-    <div class="">
-      <div class="bg3">
-        <div class="bg3_wrapper">
-          <img src="./img/bg3_tab2.png" id="tab2">
-          <img src="./img/bg3.png" id="tab1"></img>
-        </div>
-        <div id="toggle3"></div>
-        <img src="./img/rock.png" id="rock"></img>
-      </div>
-    </div> -->
   </body>
   <script src="./index.js" charset="utf-8"></script>
   <script src="./scrollRock.js" charset="utf-8"></script>

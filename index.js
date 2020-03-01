@@ -1,21 +1,39 @@
 document.body.style.overflow = 'hidden';
+let pagination = document.getElementsByClassName('p');
+let white = 'white';
+let orange = '#f78b1f';
+
+pagination[0].style.backgroundColor = orange;
+pagination[1].style.backgroundColor = white;
+pagination[2].style.backgroundColor = white;
 
 switch (window.pageYOffset) { /* контролируем обновление на каждом слайде */
-  case 768:
+  case 768: // 2 slide
     document.getElementById('txt2').style.top = '752px';
+    console.log('2slide');
+    pagination[0].style.backgroundColor = white;
+    pagination[1].style.backgroundColor = orange;
+    pagination[2].style.backgroundColor = white;
     break;
-  case 1536:
+  case 1536: // 3 slide
     document.getElementById('txt2').style.top = '553px';
+    console.log('3slide');
+    pagination[0].style.backgroundColor = white;
+    pagination[1].style.backgroundColor = white;
+    pagination[2].style.backgroundColor = orange;
     break;
-  default:
+  default: // 1 slide
+    console.log('1slide');
     document.getElementById('txt2').style.top = '950px';
-
+    pagination[0].style.backgroundColor = orange;
+    pagination[1].style.backgroundColor = white;
+    pagination[2].style.backgroundColor = white;
 }
 
 let swipe = () => {
-  var startPoint={};
-  var nowPoint;
-  var ldelay;
+  let startPoint={};
+  let nowPoint;
+  let ldelay;
   document.addEventListener('touchstart', function(event) {
   event.stopPropagation();
   startPoint.x=event.changedTouches[0].pageX;
@@ -35,42 +53,60 @@ let swipe = () => {
 
   /*Ловим отпускание пальца*/
   document.addEventListener('touchend', function(event) {
-  var pdelay=new Date();
+  let pdelay=new Date();
   nowPoint=event.changedTouches[0];
-  var xAbs = Math.abs(startPoint.x - nowPoint.pageX);
-  var yAbs = Math.abs(startPoint.y - nowPoint.pageY);
+  let xAbs = Math.abs(startPoint.x - nowPoint.pageX);
+  let yAbs = Math.abs(startPoint.y - nowPoint.pageY);
   if ((xAbs > 20 || yAbs > 20) && (pdelay.getTime()-ldelay.getTime())<200) {
   if (xAbs > yAbs) {
   // if (nowPoint.pageX < startPoint.x){/*СВАЙП ВЛЕВО*/}
   // else{/*СВАЙП ВПРАВО*/}
   } else {
   if (nowPoint.pageY < startPoint.y){/*СВАЙП ВВЕРХ*/
-    console.log(startPoint);
     if (startPoint.y < 1500) { /*проверка нижней границы*/
-      console.log('scroll down');
       let options = {
         top: 768,
         behavior: 'smooth'
       }
       window.scrollBy(options);
-      animateText('down');
-      if (window.pageYOffset > 750) {
-        console.log('3swipe');
-      } else {
+      switch (window.pageYOffset) { /* переключение пагинации */
+        case 0: // 2 slide
+          pagination[0].style.backgroundColor = white;
+          pagination[1].style.backgroundColor = orange;
+          pagination[2].style.backgroundColor = white;
+          break;
+        case 768: // 3 slide
+          pagination[0].style.backgroundColor = white;
+          pagination[1].style.backgroundColor = white;
+          pagination[2].style.backgroundColor = orange;
+          break;
+        default: // 1 slide
 
       }
+      animateText('down');
     }
   } else {/*СВАЙП ВНИЗ*/
-    console.log(startPoint);
     if (startPoint.y > 768) { /*проверка верхней границы */
-      console.log('scroll up');
       let options = {
         top: -768,
         behavior: 'smooth'
       }
       window.scrollBy(options);
+      switch (window.pageYOffset) { /* переключение пагинации */
+        case 1536: // 2 slide
+          pagination[0].style.backgroundColor = white;
+          pagination[1].style.backgroundColor = orange;
+          pagination[2].style.backgroundColor = white;
+          break;
+        case 768: // 1 slide
+          pagination[0].style.backgroundColor = orange;
+          pagination[1].style.backgroundColor = white;
+          pagination[2].style.backgroundColor = white;
+          break;
+        default:
 
-      console.log(window.pageYOffset);
+      }
+
       if (window.pageYOffset > 1500) {
         console.log('1swipe');
         document.getElementById('txt2').style.top = '554px'
